@@ -966,8 +966,7 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Builders
         /// </summary>
         /// <returns> A builder that allows the discriminator property to be configured. </returns>
         public virtual DiscriminatorBuilder HasDiscriminator()
-            => Builder.DiscriminatorBuilder(
-                Builder.GetOrCreateDiscriminatorProperty(null, null, true), ConfigurationSource.Explicit);
+            => Builder.HasDiscriminator(ConfigurationSource.Explicit);
 
         /// <summary>
         ///     Configures the discriminator property used to identify the entity type in the store.
@@ -982,7 +981,7 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Builders
             Check.NotEmpty(name, nameof(name));
             Check.NotNull(type, nameof(type));
 
-            return Builder.DiscriminatorBuilder(Property(type, name).GetInfrastructure(), ConfigurationSource.Explicit);
+            return Builder.HasDiscriminator(name, type, ConfigurationSource.Explicit);
         }
 
         /// <summary>
@@ -996,7 +995,7 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Builders
             Check.NotEmpty(name, nameof(name));
 
             return new DiscriminatorBuilder<TDiscriminator>(
-                Builder.DiscriminatorBuilder(Property(typeof(TDiscriminator), name).GetInfrastructure(), ConfigurationSource.Explicit));
+                Builder.HasDiscriminator(name, typeof(TDiscriminator), ConfigurationSource.Explicit));
         }
 
         /// <summary>
@@ -1005,7 +1004,7 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Builders
         /// <returns> The same builder instance so that multiple configuration calls can be chained. </returns>
         public virtual EntityTypeBuilder HasNoDiscriminator()
         {
-            Builder.HasNoDeclaredDiscriminator(ConfigurationSource.Explicit);
+            Builder.HasNoDiscriminator(ConfigurationSource.Explicit);
             return this;
         }
 
